@@ -9,9 +9,11 @@ import PySimpleGUI as sg
 class Tela:
     def __init__(self):
         layout = [
-            [sg.Text('ip:'),sg.Input('',key='host1')],
-            [sg.Text('quandidade de tomadas:'), sg.Input('',key='sockets1')],
-            [sg.Output(size=(10, 30))],
+            [sg.Text('ip:',font=("Helvetica", 13))], [sg.Input('',key='host1')],
+            [sg.Text('===========================',font=('Helvetical', 15), text_color='black')],
+            [sg.Text('quandidade de tomadas:', font=('Helvetica',13))], [sg.Input('',key='sockets1')],
+            [sg.Text('===========================',font=('Helvetical', 15), text_color='black')],
+            [sg.Output(size=(70, 10))],
             [sg.Button('start')]
         ]
         self.janela = sg.Window('**slowloris**').layout(layout)
