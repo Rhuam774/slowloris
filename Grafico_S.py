@@ -21,7 +21,7 @@ while True:
             
             x.append(1+ len(x))
     plt.plot(x, y)
-    plt.pause(2.0)
+    plt.pause(7.0)
 
     
 
