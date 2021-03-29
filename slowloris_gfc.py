@@ -12,6 +12,7 @@ from os import system
 
 
 #-------------
+g = 1
 system('cls')
 #===========================================================================================
 #================================ verificar arquivo de texto ===============================
@@ -21,7 +22,7 @@ arquivo_G.write('0')
 arquivo_G.close()
 
 diretorio = os.path.dirname(os.path.realpath(__file__))
-os.startfile(diretorio+'\Grafico_S.py')
+#os.startfile(diretorio+'\Grafico_S.py')
 #==========================================================================================
 #================== adicionar informação ao arquivo de texto para o grafico ===============
 def esc_ar_txt(infor): # 
@@ -102,7 +103,7 @@ class Tela:
             parser.add_argument(
                 "--sleeptime",
                 dest="sleeptime",
-                default=15,
+                default=7,
                 type=int,
                 help="Time to sleep between each header sent.",
             )
@@ -238,13 +239,16 @@ class Tela:
 
                 while True:
                     try:
+                        global g
                         logging.info(
                             "Sending keep-alive headers...0000 Socket count: %s",
                             len(list_of_sockets),
                         )
                         tomadDG = len(list_of_sockets)
                         #=================================
-                        
+                        if g == 1:
+                            os.startfile(diretorio+'\Grafico_S.py')
+                            g = 2
                         esc_ar_txt(str(tomadDG))#           coletando dados para o grafico
                         #=================================
                         
