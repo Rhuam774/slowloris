@@ -15,19 +15,11 @@ from os import system
 system('cls')
 #===========================================================================================
 #================================ verificar arquivo de texto ===============================
-while True:
-    try:
-        arquivo_G = open('pontos_G', 'r')
-        arquivo_G.close()
-        break
-    except Exception as erro:
-        try:
-            arquivo_G = open('pontos_G', 'w')
-            arquivo_G.close()
-            break
-        except Exception as erro1:
-            print(f'erro: {erro}')          
-#==========================================================================================
+
+arquivo_G = open('pontos_G', 'w')
+arquivo_G.write('0')
+arquivo_G.close()
+
 diretorio = os.path.dirname(os.path.realpath(__file__))
 os.startfile(diretorio+'\Grafico_S.py')
 #==========================================================================================
